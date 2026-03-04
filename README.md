@@ -1,16 +1,15 @@
-## Hi there 👋
+## 토마토 Pro/Master 페이지 수정하는 방법
 
-<!--
-**tomato-expert/tomato-expert** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+1. 제미나이를 통해 페이지 내용 수정
+  . 내용 수정은 [공유] > [공유] 눌러서 생성되는 링크를 여기다 붙여넣어두기 (향후 수정을 위함) 
 
-Here are some ideas to get you started:
+2. 우측 미리보기 화면 [공유] > [콘텐츠복사]
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+3. 깃허브 index.html에 들어가서 붙여넣기 후 commint change
+
+4. 1~2분 후 사이트 새로고침하여 반영된거 확인. 끝. 
+
+----
+
+2026.03.04 수정 : 6회차 오프라인 시험 접수링크 오픈
+https://gemini.google.com/share/6557e4429085
