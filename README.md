@@ -5,11 +5,18 @@
 
 2. 우측 미리보기 화면 [공유] > [콘텐츠복사]
 
-3. 깃허브 index.html에 들어가서 붙여넣기 후 commint change
+3. 깃허브 > por-master 레포지토리 > index.html에 들어가서 붙여넣기 후 commint change
 
 4. 1~2분 후 사이트 새로고침하여 반영된거 확인. 끝. 
+
 
 ----
 
 2026.03.04 수정 : 6회차 오프라인 시험 접수링크 오픈
 https://gemini.google.com/share/6557e4429085
+
+
+----
+1 레포지토리 = 1 웹페이지 라고 생각하면 됨
+신규 페이지 생성 방법은 하단을 참고
+https://gemini.google.com/share/0862a912233d
