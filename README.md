@@ -5,7 +5,7 @@
 
 2. 우측 미리보기 화면 [공유] > [콘텐츠복사]
 
-3. 깃허브 > por-master 레포지토리 > index.html에 들어가서 붙여넣기 후 commint change
+3. 깃허브 > pro-master 레포지토리 > index.html에 들어가서 붙여넣기 후 commint change
 
 4. 1~2분 후 사이트 새로고침하여 반영된거 확인. 끝. 
 
