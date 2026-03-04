@@ -1,11 +1,656 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>신청 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토마토솔루션 Pro/Master 자격제도 안내</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fdfbf7; color: #333; }
+        .tomato-text { color: #d63031; }
+        .tomato-bg { background-color: #d63031; }
+        .tomato-border { border-color: #d63031; }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px; 
+            max-height: 400px; 
+        } 
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        
+        .tab-btn { transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .tab-active { border-bottom-color: #d63031; color: #d63031; font-weight: 700; }
+        .tab-inactive { color: #6b7280; }
+        .tab-inactive:hover { color: #374151; }
+
+        .faq-answer { display: none; }
+        .faq-answer.open { display: block; animation: fadeIn 0.3s ease-in; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 타임라인 스타일 커스텀 */
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background-color: #e5e7eb; }
+        @media (min-width: 768px) {
+            .timeline-line { left: 50%; top: 20px; bottom: auto; width: 80%; height: 2px; transform: translateX(-50%); }
+        }
+
+        /* 어절 단위 끊김 설정 */
+        .break-keep { word-break: keep-all; }
+    </style>
 </head>
-<body>
-    <h1>안녕하세요! 현재 신청 접수 중입니다.</h1>
-    <p>여기에 상세한 내용이 들어갑니다.</p>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- 텍스트 로고로 원복 -->
+                    <span class="text-2xl font-bold tomato-text">TOMATO</span>
+                    <span class="text-gray-600 text-sm font-normal ml-2">Partner Certification</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+                    <button onclick="scrollToSection('intro')" class="text-gray-600 hover:text-red-600 px-2 py-2 text-sm font-medium transition">제도개요</button>
+                    <button onclick="scrollToSection('benefits')" class="text-gray-600 hover:text-red-600 px-2 py-2 text-sm font-medium transition">혜택</button>
+                    <button onclick="scrollToSection('process')" class="text-gray-600 hover:text-red-600 px-2 py-2 text-sm font-medium transition">취득절차</button>
+                    <button onclick="scrollToSection('maintenance')" class="text-gray-600 hover:text-red-600 px-2 py-2 text-sm font-medium transition">유지관리</button>
+                    
+                    <div class="flex items-center space-x-2 border-l pl-4 border-gray-100">
+                        <a href="https://forms.gle/CMnTev9GyterFBZa6" target="_blank" class="bg-red-50 text-red-600 border border-red-200 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-red-100 transition whitespace-nowrap">오프라인 워크샵 신청</a>
+                        <button disabled class="bg-gray-100 text-gray-400 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold cursor-not-allowed whitespace-nowrap">온라인 시험 종료</button>
+                        <!-- 증빙 제출하기 링크 업데이트 -->
+                        <a href="https://forms.gle/eDd1rbtBxhKBvas86" target="_blank" class="bg-gray-800 text-white px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-black transition shadow-sm whitespace-nowrap">증빙 제출하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-br from-red-50 to-orange-50 py-12 md:py-20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 break-keep">미래의 마트를 이끄는 힘, <span class="tomato-text">TOMATO</span></h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed break-keep">
+                토마토솔루션 Pro/Master 자격제도는 파트너사의 전문성을 인증하고<br class="hidden md:block">
+                함께 성장하기 위한 공식 전문가 양성 프로그램입니다.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="scrollToSection('intro')" class="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition shadow-sm">
+                    자격제도 취지 확인
+                </button>
+                <button onclick="scrollToSection('benefits')" class="tomato-bg text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition shadow-lg">
+                    자격 혜택 및 정의 보기
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 0: 자격제도 취지 -->
+    <section id="intro" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="tomato-text font-bold text-sm tracking-widest uppercase mb-2 block">Objective</span>
+                <h2 class="text-3xl font-bold text-gray-800">자격제도 취지</h2>
+            </div>
+            
+            <div class="bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-14 mb-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <p class="text-xl md:text-2xl text-gray-700 leading-snug break-keep font-medium">
+                        "토마토 POS 및 통합 솔루션 전반에 대한 <span class="tomato-text font-bold underline underline-offset-8">체계적인 이론 이해</span>와<br class="hidden md:block"> 
+                        <span class="tomato-text font-bold underline underline-offset-8">현장 중심의 실무 역량</span>을 검증하는 공식 자격 인증 제도입니다."
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                    <div class="relative p-8 bg-white rounded-2xl shadow-sm border-t-4 tomato-border">
+                        <span class="absolute top-4 right-6 text-4xl font-black text-red-50 opacity-100 tomato-text/5">01</span>
+                        <h4 class="font-bold text-gray-800 text-lg mb-4">전문 역량 검증</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed break-keep">정기적인 교육과 평가를 거쳐 솔루션 활용 능력 및 운영 전반에 대한 깊은 이해도를 종합적으로 검증합니다.</p>
+                    </div>
+                    <div class="relative p-8 bg-white rounded-2xl shadow-sm border-t-4 tomato-border">
+                        <span class="absolute top-4 right-6 text-4xl font-black text-red-50 opacity-100 tomato-text/5">02</span>
+                        <h4 class="font-bold text-gray-800 text-lg mb-4">품질 상향 평준화</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed break-keep">Pro / Master 단계별 자격 체계를 통해 매장 및 파트너 인력 전반에 신뢰 가능한 표준 서비스 품질을 구축합니다.</p>
+                    </div>
+                    <div class="relative p-8 bg-white rounded-2xl shadow-sm border-t-4 tomato-border">
+                        <span class="absolute top-4 right-6 text-4xl font-black text-red-50 opacity-100 tomato-text/5">03</span>
+                        <h4 class="font-bold text-gray-800 text-lg mb-4">동반 성장 도모</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed break-keep">검증된 파트너 인력을 확보하여 토마토솔루션의 전국적 확산과 안정적인 운영을 함께 실현해 나갑니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Benefits & Definitions -->
+    <section id="benefits" class="py-16 max-w-6xl mx-auto px-4 border-t border-gray-50">
+        <div class="mb-10 text-center md:text-left">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">자격 등급 정의 및 혜택</h2>
+            <p class="text-gray-600 max-w-2xl leading-relaxed break-keep">
+                자격 등급은 숙련도와 역할 수준에 따라 <strong>Pro</strong>와 <strong>Master</strong>로 구분됩니다.<br>
+                아래에서 각 등급의 정의와 연간 수령 가능 혜택을 확인하세요.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Cards -->
+            <div class="space-y-6">
+                <!-- Pro Card -->
+                <div class="bg-white rounded-xl p-6 card-shadow border-l-4 border-gray-400 hover:border-red-500 transition cursor-pointer" onclick="highlightChart(0)">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Pro (전문가)</h3>
+                            <p class="text-sm text-red-600 font-bold mt-1">Level 1: 기초 역량 보유자</p>
+                        </div>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Stage 1</span>
+                    </div>
+                    <div class="mt-4 border-t pt-4">
+                        <p class="text-sm text-gray-600 leading-tight mb-4 break-keep">
+                            토마토솔루션의 전반적인 이해와 POS/ERP 등 <strong>기초 활용 능력을 갖춘 Level 1 전문가</strong>입니다.
+                        </p>
+                        <p class="text-3xl font-bold tomato-text">월 100,000원 <span class="text-sm text-gray-400 font-normal">/ 1인</span></p>
+                        <p class="text-xs text-gray-400 mt-1">* 3.3% 사업소득 공제 후 지급</p>
+                    </div>
+                </div>
+
+                <!-- Master Card -->
+                <div class="bg-white rounded-xl p-6 card-shadow border-l-4 tomato-border transform scale-105 shadow-lg relative cursor-pointer" onclick="highlightChart(1)">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-red-700">Master (마스터)</h3>
+                            <p class="text-sm text-red-600 font-bold mt-1">Level 2: 심화 역량 보유자</p>
+                        </div>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Stage 2</span>
+                    </div>
+                    <div class="mt-4 border-t pt-4">
+                        <p class="text-sm text-gray-600 leading-tight mb-4 break-keep">
+                            시나리오 기반 실습을 통과한 숙련자로, <strong>심화된 문제 해결 및 고도화된 세팅 능력을 갖춘 전문가</strong>입니다.
+                        </p>
+                        <p class="text-3xl font-bold tomato-text">월 200,000원 <span class="text-sm text-gray-400 font-normal">/ 1인</span></p>
+                        <p class="text-xs text-gray-400 mt-1">* Pro 대비 2배 혜택 지급</p>
+                    </div>
+                </div>
+
+                 <!-- Grand Master Card -->
+                 <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl p-6 card-shadow border border-yellow-200 cursor-pointer" onclick="highlightChart(2)">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-yellow-800">Grand Master</h3>
+                            <p class="text-sm text-yellow-700 mt-1">최상위 실적 우수자</p>
+                        </div>
+                        <span class="bg-yellow-400 text-white text-xs px-2 py-1 rounded">Special</span>
+                    </div>
+                    <div class="mt-4 border-t border-yellow-200 pt-4">
+                        <p class="text-sm text-yellow-800 leading-tight mb-2 break-keep">
+                            연간 POS 오픈 실적 24대 이상 오픈한 마스터 전원에게 수여되는 <strong>최고의 영예</strong>입니다.
+                        </p>
+                        <p class="text-lg font-bold text-yellow-900"> RI주식 5주 <span class="text-sm font-normal">또는</span> 상금 100만원 (연 1회)</p>
+                        <p class="text-xs text-yellow-700 mt-1">* RI 주식 발행가 : 1주당 49만원 (2025년 기준)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="bg-white p-6 rounded-xl card-shadow">
+                <h4 class="text-sm font-bold text-gray-500 mb-4 uppercase tracking-wide text-center">연간 수령 가능 금액 비교 (합산액)</h4>
+                <div class="chart-container">
+                    <canvas id="benefitChart"></canvas>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4 break-keep">클릭 시 상세 정보를 확인할 수 있습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Acquisition Process Journey -->
+    <section id="process" class="bg-gray-50 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">자격 취득 및 승급 로드맵</h2>
+                <p class="text-gray-600 break-keep">응시부터 마스터 승급까지의 여정을 확인하세요.</p>
+            </div>
+
+            <!-- Interactive Timeline -->
+            <div class="relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center group hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-xl mb-4 border-4 border-white shadow-sm">1</div>
+                        <h3 class="font-bold text-lg mb-2">자격시험 응시</h3>
+                        <p class="text-sm text-gray-500 mb-4">정기시험 (필기/실기)</p>
+                        <div class="w-full bg-gray-100 rounded-lg p-3 text-xs text-left">
+                            <p><strong>합격기준:</strong> 각 70점 이상</p>
+                            <p class="mt-2 text-gray-800 font-bold">정기시험 일정</p>
+                            <p class="mt-1 text-gray-400">오프라인: 매월 마지막주 화~수요일</p>
+                            <p class="text-gray-400">온라인: 매월 2주차 금요일</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center group hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-xl mb-4 border-4 border-white shadow-sm">2</div>
+                        <h3 class="font-bold text-lg mb-2">Pro 취득</h3>
+                        <p class="text-sm text-gray-500 mb-4">현장실무 인증 필요</p>
+                        <div class="w-full bg-red-50 border border-red-100 rounded-lg p-3 text-xs text-left">
+                            <p class="font-bold text-red-600">❗ 필수 조건</p>
+                            <p class="mt-1">합격 후 2개월 내</p>
+                            <p>POS 오픈 <span class="font-bold underline">1대 이상</span> 증빙</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center group hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-xl mb-4 border-4 border-white shadow-sm group-hover:bg-red-100 group-hover:text-red-600 transition">3</div>
+                        <h3 class="font-bold text-lg mb-2">자격 유지</h3>
+                        <p class="text-sm text-gray-500 mb-4">지속적인 활동</p>
+                        <div class="w-full bg-gray-100 rounded-lg p-3 text-xs text-left">
+                            <p><strong>매 2개월 마다</strong></p>
+                            <p>오픈 실적 1대 이상</p>
+                            <p class="mt-1 text-red-500 font-bold">* 2개월 무실적 시 수당 중단</p>
+                        </div>
+                    </div>
+                     <!-- Step 4 -->
+                     <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center group hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center font-bold text-xl mb-4 border-4 border-white shadow-sm">4</div>
+                        <h3 class="font-bold text-lg mb-2">Master 자동승급</h3>
+                        <p class="text-sm text-gray-500 mb-4">요건 충족 시 자동 승급</p>
+                        <div class="w-full bg-yellow-50 border border-yellow-100 rounded-lg p-3 text-xs text-left">
+                            <div class="mb-2">
+                                <p class="font-bold text-yellow-800 mb-1">🏆 자동 승급 조건</p>
+                                <p class="break-keep">Pro 취득 후 누적 실적 <span class="font-bold text-yellow-700">10대 달성</span> 시</p>
+                            </div>
+                            <div class="pt-2 border-t border-yellow-200">
+                                <p class="font-bold text-yellow-800 mb-1">✅ 자격 유지</p>
+                                <p class="break-keep text-gray-700">매 2개월마다 1대 이상 오픈 (연 6대)</p>
+                                <p class="mt-1 text-red-600 font-bold break-keep text-[10px] leading-tight">* 한꺼번에 오픈해도 연간 자격유지 인정</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 시험 신청 & 일정 타임라인 섹션 -->
+            <div id="exam-registration" class="mt-12 bg-white rounded-2xl shadow-xl p-8 border border-red-50 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Left: 신청 버튼 구역 -->
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">시험 신청 센터</h3>
+                        <div class="space-y-6">
+                            <div class="group">
+                                <a href="https://forms.gle/CMnTev9GyterFBZa6" target="_blank" class="flex items-center justify-between w-full tomato-bg text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 transition shadow-md">
+                                    <span>오프라인 워크샵 신청하기</span>
+                                    <span class="text-sm bg-white/20 px-3 py-1 rounded-full text-white">신청중</span>
+                                </a>
+                                <p class="text-sm tomato-text mt-2 ml-2 font-bold">접수기간: ~ 3/13(금) 까지</p>
+                            </div>
+                            
+                            <div class="group opacity-60">
+                                <button disabled class="flex items-center justify-between w-full bg-gray-200 text-gray-500 px-8 py-4 rounded-xl font-bold text-lg cursor-not-allowed border border-gray-300">
+                                    <span>온라인 시험 신청하기</span>
+                                    <span class="text-sm bg-gray-400/20 px-3 py-1 rounded-full text-gray-500">종료</span>
+                                </button>
+                                <p class="text-sm text-gray-400 mt-2 ml-2 font-medium italic">접수기간 종료</p>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-sm text-gray-500 leading-relaxed break-keep">
+                            ※ 시험 신청은 정해진 기간 내에만 가능합니다.<br>
+                            ※ 오프라인 시험은 현장 실무 위주의 워크샵과 함께 진행됩니다.
+                        </p>
+                    </div>
+
+                    <!-- Right: 오프라인 지역 타임라인 -->
+                    <div class="relative z-10 bg-gray-50/50 rounded-xl p-6 border border-gray-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-8 flex items-center">
+                            <span class="w-8 h-8 tomato-bg text-white rounded-lg flex items-center justify-center mr-3 text-sm">📍</span>
+                            2026 오프라인 교육 워크샵 지역
+                        </h3>
+                        
+                        <div class="relative px-4">
+                            <div class="timeline-line"></div>
+                            
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-8 md:space-y-0 relative">
+                                <!-- 1월 -->
+                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                    <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
+                                        <span class="text-red-600 font-bold text-xs uppercase">JAN</span>
+                                    </div>
+                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                        <p class="text-sm font-bold text-gray-800">2026년 1월</p>
+                                        <p class="text-xs text-gray-500 mt-1">경기도 가평</p>
+                                    </div>
+                                </div>
+
+                                <!-- 2월 -->
+                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                    <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
+                                        <span class="text-red-600 font-bold text-xs uppercase">FEB</span>
+                                    </div>
+                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                        <p class="text-sm font-bold text-gray-800">2026년 2월</p>
+                                        <p class="text-xs text-gray-500 mt-1">충남 공주</p>
+                                    </div>
+                                </div>
+
+                                <!-- 3월 -->
+                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                    <div class="w-12 h-12 rounded-full bg-red-600 border-4 border-white flex items-center justify-center z-10 shadow-lg group-hover:scale-110 transition">
+                                        <span class="text-white font-bold text-xs uppercase">MAR</span>
+                                    </div>
+                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                        <p class="text-sm font-bold text-red-600">2026년 3월</p>
+                                        <p class="text-xs text-red-500 font-bold mt-1">경북 김천</p>
+                                    </div>
+                                </div>
+
+                                <!-- 4월 -->
+                                <div class="flex md:flex-col items-center text-left md:text-center w-full group opacity-50">
+                                    <div class="w-12 h-12 rounded-full bg-white border-4 border-gray-300 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
+                                        <span class="text-gray-400 font-bold text-xs uppercase">APR</span>
+                                    </div>
+                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                        <p class="text-sm font-bold text-gray-600">2026년 4월</p>
+                                        <p class="text-xs text-gray-500 mt-1 italic">경상도 (예정)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exam Detail Tabs -->
+            <div id="exam-details" class="mt-12 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="w-2 h-6 tomato-bg mr-3 rounded-full"></span>
+                    자격시험 상세 안내
+                </h3>
+                
+                <div class="flex space-x-6 border-b border-gray-200 mb-6">
+                    <button class="tab-btn tab-active pb-2" onclick="switchTab('written', this)">필기시험 범위</button>
+                    <button class="tab-btn tab-inactive pb-2" onclick="switchTab('practical', this)">실기시험 범위</button>
+                </div>
+                <div id="written-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">평가 방식</h4>
+                        <p class="text-sm text-gray-600 break-keep">객관식 및 주관식 혼합형 (60분)</p>
+                        <div class="mt-4 p-4 bg-gray-50 rounded text-sm">
+                            <span class="font-bold block mb-1">🔍 요구 역량</span>
+                            <p class="break-keep">토마토솔루션에 대한 전반적인 이해와 폭넓은 지식</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">출제 범위</h4>
+                        <ul class="text-sm text-gray-600 space-y-1 list-disc pl-4 break-keep">
+                            <li>토마토솔루션의 이해 (Mission & Vision)</li>
+                            <li>POS / KIOSK / HT 기능</li>
+                            <li>ERP 시스템 이해</li>
+                            <li>관리자 APP, 토마토 APP</li>
+                            <li>POP</li>
+                            <li>TRADE / 문자 / 스마트전단 등</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="practical-content" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">평가 방식</h4>
+                        <p class="text-sm text-gray-600 break-keep">시나리오 기반 실습형 (100분)</p>
+                        <div class="mt-4 p-4 bg-gray-50 rounded text-sm">
+                            <span class="font-bold block mb-1">🛠️ 요구 역량</span>
+                            <p class="break-keep">시나리오를 바탕으로 솔루션을 세팅하고, 제시된 설정값을 정확히 도출하는 능력</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">주요 과제</h4>
+                        <ul class="text-sm text-gray-600 space-y-1 list-disc pl-4 break-keep">
+                            <li>매장 환경 설정 및 상품 등록</li>
+                            <li>행사 설정 및 회원 관리</li>
+                            <li>주문 처리 및 결제 시뮬레이션</li>
+                            <li>마감 및 리포트 조회</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Maintenance & FAQ -->
+    <section id="maintenance" class="py-16 max-w-4xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Maintenance Rules -->
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-sm mr-3">⚠️</span>
+                    자격 유지 및 상실 기준
+                </h3>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-green-500 bg-green-50 p-4 rounded-r-lg">
+                        <h4 class="font-bold text-green-800">✅ 유지 조건 (매 2개월)</h4>
+                        <p class="text-sm text-green-700 mt-1 break-keep">
+                            마지막 실적 증빙일로부터 2개월 내에<br>
+                            <strong>POS/KIOSK 오픈 실적 1대 이상</strong> 증빙 제출
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-r-lg">
+                        <h4 class="font-bold text-red-800">⛔ 상실 조건 (수당 중단)</h4>
+                        <p class="text-sm text-red-700 mt-1 break-keep">
+                            마지막 실적 증빙일로부터 2개월 이내 POS/KIOSK 오픈 무실적 시 즉시 수당 지급 중단.
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r-lg">
+                        <h4 class="font-bold text-blue-800">🔄 자격의 부활</h4>
+                        <p class="text-sm text-blue-700 mt-1 break-keep">
+                            자격 상실 이후 <strong>2대 이상 오픈 시</strong>, 해당 월부터 자격 재개 (수당 지급 재개)
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <h4 class="font-bold text-gray-800 mb-3">📝 증빙 서류 제출 안내</h4>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-4 break-keep">
+                        <li class="flex items-start">
+                            <span class="mr-2">•</span> 
+                            <span><strong>서류:</strong> POS 오픈 실적 증빙 자료</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">•</span> 
+                            <span><strong>방식:</strong> 매장명과 본인 얼굴이 모두 나오도록 사진 촬영</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">•</span> 
+                            <span class="text-red-600 font-bold">마감: 매월 20일 자정까지</span>
+                        </li>
+                    </ul>
+                    <!-- 증빙 제출하기 링크 업데이트 -->
+                    <a href="https://forms.gle/eDd1rbtBxhKBvas86" target="_blank" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition break-keep">
+                        지금 바로 증빙 제출하기 (Google Forms)
+                    </a>
+                </div>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">자주 묻는 질문 (FAQ)</h3>
+                <div class="space-y-3">
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="w-full text-left px-5 py-4 bg-white hover:bg-gray-50 flex justify-between items-center transition" onclick="toggleFaq(this)">
+                            <span class="font-medium text-gray-700 text-sm break-keep">Q. 자격수당은 개인에게 지급되나요, 회사로 지급되나요?</span>
+                            <span class="text-gray-400">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-5 py-4 text-sm text-gray-600 border-t border-gray-200 break-keep">
+                            자격수당은 사업소득 3.3% 공제후 개인에게 지급됩니다.
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="w-full text-left px-5 py-4 bg-white hover:bg-gray-50 flex justify-between items-center transition" onclick="toggleFaq(this)">
+                            <span class="font-medium text-gray-700 text-sm break-keep">Q. 자격시험 합격 후, POS 4대를 오픈했습니다. 누적 4대 인가요?</span>
+                            <span class="text-gray-400">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-5 py-4 text-sm text-gray-600 border-t border-gray-200 break-keep">
+                            예 맞습니다. Pro 취득과 동시에 누적 4대로 인정됩니다.<br>
+                            이후 6대를 추가 증빙해주시면 마스터로 자동 승급됩니다.
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="w-full text-left px-5 py-4 bg-white hover:bg-gray-50 flex justify-between items-center transition" onclick="toggleFaq(this)">
+                            <span class="font-medium text-gray-700 text-sm break-keep">Q. Master 승급 시 매장 개수가 중요한가요?</span>
+                            <span class="text-gray-400">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-5 py-4 text-sm text-gray-600 border-t border-gray-200 break-keep">
+                            매장의 개수와 상관없이 Pro 취득 후, 누적 POS 10대 이상이면 자동 승급됩니다. (한 매장에 여러 대 설치해도 인정)
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="w-full text-left px-5 py-4 bg-white hover:bg-gray-50 flex justify-between items-center transition" onclick="toggleFaq(this)">
+                            <span class="font-medium text-gray-700 text-sm break-keep">Q. 교육을 들으면 실적으로 인정되나요?</span>
+                            <span class="text-gray-400">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-5 py-4 text-sm text-gray-600 border-t border-gray-200 break-keep">
+                            아니오. 교육 이수와 오픈 실적은 별개입니다. 오픈 실적은 실제 설치 건만 인정됩니다.
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="w-full text-left px-5 py-4 bg-white hover:bg-gray-50 flex justify-between items-center transition" onclick="toggleFaq(this)">
+                            <span class="font-medium text-gray-700 text-sm break-keep">Q. 실적 증빙 시 주의사항은?</span>
+                            <span class="text-gray-400">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-5 py-4 text-sm text-gray-600 border-t border-gray-200 break-keep">
+                            오픈 매장명과 <strong>본인의 얼굴이 모두 보이도록</strong> 사진을 촬영하여 제출해야 합니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t border-gray-200 py-10 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center text-gray-500 text-xs md:text-sm">
+            <p class="font-bold mb-2 text-gray-700">(주)리테일앤인사이트</p>
+            <p class="mb-4">본 자격제도 안내는 2026년 2월 23일 기준으로 작성되었습니다.</p>
+            <div class="flex justify-center mb-6">
+                <div>
+                    <span class="block font-bold">토마토 고객센터</span>
+                    <span class="text-lg tomato-text font-bold">1577-2536</span>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400 break-keep">※ 자격 기준 및 운영 정책은 내부 사정에 따라 업데이트되거나 변경될 수 있습니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function switchTab(tabId, btn) {
+            document.getElementById('written-content').classList.add('hidden');
+            document.getElementById('practical-content').classList.add('hidden');
+            document.getElementById(tabId + '-content').classList.remove('hidden');
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(b => {
+                b.classList.remove('tab-active');
+                b.classList.add('tab-inactive');
+            });
+            btn.classList.remove('tab-inactive');
+            btn.classList.add('tab-active');
+        }
+
+        function toggleFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const isOpen = answer.classList.contains('open');
+            const arrow = btn.querySelector('span:last-child');
+            document.querySelectorAll('.faq-answer').forEach(el => {
+                el.classList.remove('open');
+                el.previousElementSibling.querySelector('span:last-child').innerText = '▼';
+            });
+            if (!isOpen) {
+                answer.classList.add('open');
+                arrow.innerText = '▲';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('benefitChart').getContext('2d');
+            window.benefitChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Pro (연간)', 'Master (연간)', 'Grand Master (합계)'],
+                    datasets: [{
+                        label: '연간 예상 합계 수당 (원)',
+                        data: [1200000, 2400000, 3400000],
+                        backgroundColor: [
+                            'rgba(209, 213, 219, 0.7)', 
+                            'rgba(214, 48, 49, 0.8)',   
+                            'rgba(251, 191, 36, 0.8)'   
+                        ],
+                        borderColor: [
+                            'rgba(209, 213, 219, 1)',
+                            'rgba(214, 48, 49, 1)',
+                            'rgba(251, 191, 36, 1)'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 10000).toLocaleString() + '만';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString() + '원';
+                                        if (context.dataIndex === 2) {
+                                            label += ' (Master 연간 240만 + 상금 100만)';
+                                        }
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        function highlightChart(index) {
+            if(window.innerWidth < 768) {
+                document.getElementById('benefitChart').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            const colors = ['rgba(209, 213, 219, 0.3)', 'rgba(214, 48, 49, 0.3)', 'rgba(251, 191, 36, 0.3)'];
+            const activeColors = ['rgba(107, 114, 128, 1)', 'rgba(214, 48, 49, 1)', 'rgba(251, 191, 36, 1)'];
+            const newBg = [...colors];
+            newBg[index] = activeColors[index];
+            window.benefitChart.data.datasets[0].backgroundColor = newBg;
+            window.benefitChart.update();
+        }
+    </script>
 </body>
 </html>
