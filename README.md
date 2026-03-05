@@ -22,7 +22,7 @@ https://tomato-expert.github.io/pro-master/
 
 . 수정 History
   - 2026.03.04 : 6회차 오프라인 시험 접수링크 오픈
-    - https://gemini.google.com/share/6557e4429085
+    - https://gemini.google.com/share/f18a043eda91
 
 
 ----
