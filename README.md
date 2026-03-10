@@ -9,6 +9,9 @@ https://tomato-expert.github.io/pro-master/
 
 2. 제미나이 통해 수정하고, 제미나이 내 화면 우측상단 [공유] > [콘텐츠복사]
 
+<img width="403" height="163" alt="image" src="https://github.com/user-attachments/assets/563f0f08-f280-441a-b83b-3da280f0fe20" />
+
+
 3. 깃허브 > pro-master 레포지토리 > index.html에 들어가서 붙여넣기 후 commit changes 클릭
 
 4. 1~2분 후 사이트 새로고침하여 반영된거 확인. 끝. 
