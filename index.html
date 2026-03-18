@@ -65,8 +65,8 @@
                     <button onclick="scrollToSection('maintenance')" class="text-gray-600 hover:text-red-600 px-2 py-2 text-sm font-medium transition">유지관리</button>
                     
                     <div class="flex items-center space-x-2 border-l pl-4 border-gray-100">
-                        <a href="https://forms.gle/CMnTev9GyterFBZa6" target="_blank" class="bg-red-50 text-red-600 border border-red-200 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-red-100 transition whitespace-nowrap">교육 워크샵 신청</a>
-                        <a href="https://forms.gle/SqheWwiByW2Eu4Kr8" target="_blank" class="bg-white text-gray-800 border border-gray-200 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-gray-50 transition shadow-sm whitespace-nowrap">온라인 시험 신청</a>
+                        <a href="javascript:void(0)" class="bg-gray-100 text-gray-400 border border-gray-200 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold cursor-not-allowed whitespace-nowrap">교육 워크샵 마감</a>
+                        <a href="https://forms.gle/SqheWwiByW2Eu4Kr8" target="_blank" class="bg-red-50 text-red-600 border border-red-200 px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-red-100 transition whitespace-nowrap">온라인 시험 신청</a>
                         <!-- 증빙 제출하기 링크 업데이트 -->
                         <a href="https://forms.gle/eDd1rbtBxhKBvas86" target="_blank" class="bg-gray-800 text-white px-3 py-2 rounded-lg text-[11px] lg:text-xs font-bold hover:bg-black transition shadow-sm whitespace-nowrap">증빙 제출하기</a>
                     </div>
@@ -87,8 +87,8 @@
                 <button onclick="scrollToSection('benefits')" class="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition shadow-sm">
                     자격 혜택 및 정의 보기
                 </button>
-                <a href="https://forms.gle/CMnTev9GyterFBZa6" target="_blank" class="tomato-bg text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition shadow-lg text-center">
-                    교육 워크샵 신청하기
+                <a href="https://forms.gle/SqheWwiByW2Eu4Kr8" target="_blank" class="tomato-bg text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition shadow-lg text-center">
+                    온라인 시험 신청하기
                 </a>
             </div>
         </div>
@@ -286,19 +286,19 @@
                         <h3 class="text-2xl font-bold text-gray-800 mb-6">시험 신청 센터</h3>
                         <div class="space-y-6">
                             <div class="group">
-                                <a href="https://forms.gle/CMnTev9GyterFBZa6" target="_blank" class="flex items-center justify-between w-full tomato-bg text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 transition shadow-md">
-                                    <span>교육 워크샵 신청하기(1박2일)</span>
-                                    <span class="text-sm bg-white/20 px-3 py-1 rounded-full text-white">신청중</span>
-                                </a>
-                                <p class="text-sm tomato-text mt-2 ml-2 font-bold">접수기간: ~ 3/13(금) 까지</p>
+                                <div class="flex items-center justify-between w-full bg-gray-200 text-gray-500 px-8 py-4 rounded-xl font-bold text-lg shadow-sm cursor-not-allowed">
+                                    <span class="line-through">교육 워크샵 신청하기(1박2일)</span>
+                                    <span class="text-sm bg-gray-400/20 px-3 py-1 rounded-full text-gray-600">신청마감</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-2 ml-2 font-bold">접수 마감되었습니다.</p>
                             </div>
                             
                             <div class="group">
-                                <a href="https://forms.gle/SqheWwiByW2Eu4Kr8" target="_blank" class="flex items-center justify-between w-full bg-white text-gray-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition shadow-md border border-gray-200">
+                                <a href="https://forms.gle/SqheWwiByW2Eu4Kr8" target="_blank" class="flex items-center justify-between w-full tomato-bg text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 transition shadow-md border border-red-200">
                                     <span>온라인 시험 신청하기</span>
-                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">신청중</span>
+                                    <span class="text-sm bg-white/20 px-3 py-1 rounded-full text-white">기간연장</span>
                                 </a>
-                                <p class="text-sm text-gray-500 mt-2 ml-2 font-medium">접수기간: ~ 3/13(금) 까지</p>
+                                <p class="text-sm text-red-600 mt-2 ml-2 font-bold">접수기간: ~ 3/19(목) 까지 (연장됨!)</p>
                             </div>
                         </div>
                         <p class="mt-8 text-sm text-gray-500 leading-relaxed break-keep">
