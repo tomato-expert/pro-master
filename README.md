@@ -32,8 +32,8 @@ https://tomato-expert.github.io/pro-master/
     - https://gemini.google.com/share/2365e1658f83
   - 2026.03.20 : 6회차 온라인 시험 접수 마감
     - https://gemini.google.com/share/f8c090cff2d0
-  - 2026.03.26 : 4월 워크샵 + 7회차 온라인 시험 접수링크 오픈
-    - https://forms.gle/JCaFK896N6pujHkf8
+  - 2026.03.30 : 4월 워크샵 + 7회차 온라인 시험 접수링크 오픈
+    - https://gemini.google.com/share/8e64303a929c
 
 
 
