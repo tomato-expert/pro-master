@@ -36,6 +36,8 @@ https://tomato-expert.github.io/pro-master/
     - https://gemini.google.com/share/8e64303a929c
   - 2026.04.01 : 워크샵 신청버튼 및 실기시험 범위 수정
     - https://gemini.google.com/share/bca74dfc0603
+  - 2026.04.24 : 워크샵 + 온라인시험 신청버튼 비활성화
+    - https://gemini.google.com/share/9278d149788c
 
 
 
