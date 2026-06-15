@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #fdfbf7; color: #333; }
         .tomato-text { color: #d63031; }
@@ -272,22 +273,22 @@
             <div id="exam-registration" class="mt-12 bg-white rounded-2xl shadow-xl p-8 border border-red-50 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     <!-- Left: 신청 버튼 구역 -->
-                    <div class="relative z-10">
+                    <div class="relative z-10 lg:col-span-5">
                         <h3 class="text-2xl font-bold text-gray-800 mb-6">시험 신청 센터</h3>
                         <div class="space-y-6">
                             <a href="https://forms.gle/q8ufzxYabUfWu2wy6" target="_blank" class="group block">
-                                <div class="flex items-center justify-between w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-100 px-8 py-4 rounded-xl font-bold text-lg shadow-sm transition cursor-pointer">
-                                    <span>교육 워크샵 신청하기(1박2일)</span>
-                                    <span class="text-sm bg-red-600 text-white px-3 py-1 rounded-full shadow-sm group-hover:bg-red-700 transition">신청</span>
+                                <div class="flex items-center justify-between w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-100 px-6 xl:px-8 py-4 rounded-xl font-bold text-base xl:text-lg shadow-sm transition cursor-pointer">
+                                    <span class="break-keep">교육 워크샵 신청하기(1박2일)</span>
+                                    <span class="text-sm bg-red-600 text-white px-3 py-1 rounded-full shadow-sm group-hover:bg-red-700 transition flex-shrink-0 ml-2">신청</span>
                                 </div>
                             </a>
                             
                             <a href="https://forms.gle/JCaFK896N6pujHkf8" target="_blank" class="group block">
-                                <div class="flex items-center justify-between w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-100 px-8 py-4 rounded-xl font-bold text-lg shadow-sm transition cursor-pointer">
-                                    <span>온라인 시험 신청하기</span>
-                                    <span class="text-sm bg-red-600 text-white px-3 py-1 rounded-full shadow-sm group-hover:bg-red-700 transition">신청</span>
+                                <div class="flex items-center justify-between w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-100 px-6 xl:px-8 py-4 rounded-xl font-bold text-base xl:text-lg shadow-sm transition cursor-pointer">
+                                    <span class="break-keep">온라인 시험 신청하기</span>
+                                    <span class="text-sm bg-red-600 text-white px-3 py-1 rounded-full shadow-sm group-hover:bg-red-700 transition flex-shrink-0 ml-2">신청</span>
                                 </div>
                             </a>
                         </div>
@@ -298,68 +299,79 @@
                     </div>
 
                     <!-- Right: 오프라인 지역 타임라인 -->
-                    <div class="relative z-10 bg-gray-50/50 rounded-xl p-6 border border-gray-100">
+                    <div class="relative z-10 bg-gray-50/50 rounded-xl p-6 border border-gray-100 lg:col-span-7">
                         <h3 class="text-xl font-bold text-gray-800 mb-8 flex items-center">
                             <span class="w-8 h-8 tomato-bg text-white rounded-lg flex items-center justify-center mr-3 text-sm">📍</span>
                             2026 오프라인 교육 워크샵 지역
                         </h3>
                         
-                        <div class="relative px-4">
+                        <div class="relative px-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0">
                             <div class="timeline-line"></div>
                             
-                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-8 md:space-y-0 relative">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-8 md:space-y-0 relative min-w-max md:min-w-0">
                                 <!-- 1월 -->
-                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
                                     <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
                                         <span class="text-red-600 font-bold text-xs uppercase">JAN</span>
                                     </div>
-                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
                                         <p class="text-sm font-bold text-gray-800">2026년 1월</p>
                                         <p class="text-xs text-gray-500 mt-1">경기도 가평</p>
                                     </div>
                                 </div>
 
                                 <!-- 2월 -->
-                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
                                     <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
                                         <span class="text-red-600 font-bold text-xs uppercase">FEB</span>
                                     </div>
-                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
                                         <p class="text-sm font-bold text-gray-800">2026년 2월</p>
                                         <p class="text-xs text-gray-500 mt-1">충남 공주</p>
                                     </div>
                                 </div>
 
                                 <!-- 3월 -->
-                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
                                     <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
                                         <span class="text-red-600 font-bold text-xs uppercase">MAR</span>
                                     </div>
-                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
                                         <p class="text-sm font-bold text-gray-800">2026년 3월</p>
                                         <p class="text-xs text-gray-500 mt-1">대구</p>
                                     </div>
                                 </div>
 
                                 <!-- 4월 -->
-                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
                                     <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
                                         <span class="text-red-600 font-bold text-xs uppercase">APR</span>
                                     </div>
-                                    <div class="ml-4 md:ml-0 md:mt-4">
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
                                         <p class="text-sm font-bold text-gray-800">2026년 4월</p>
                                         <p class="text-xs text-gray-500 mt-1">경기도 화성</p>
                                     </div>
                                 </div>
 
                                 <!-- 5월 -->
-                                <div class="flex md:flex-col items-center text-left md:text-center w-full group">
-                                    <div class="w-12 h-12 rounded-full bg-red-600 border-4 border-white flex items-center justify-center z-10 shadow-lg group-hover:scale-110 transition">
-                                        <span class="text-white font-bold text-xs uppercase">MAY</span>
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
+                                    <div class="w-12 h-12 rounded-full bg-white border-4 border-red-500 flex items-center justify-center z-10 shadow-sm group-hover:scale-110 transition">
+                                        <span class="text-red-600 font-bold text-xs uppercase">MAY</span>
                                     </div>
-                                    <div class="ml-4 md:ml-0 md:mt-4">
-                                        <p class="text-sm font-bold text-red-600">2026년 5월</p>
-                                        <p class="text-xs text-red-500 font-bold mt-1">경기도 용인</p>
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
+                                        <p class="text-sm font-bold text-gray-800">2026년 5월</p>
+                                        <p class="text-xs text-gray-500 mt-1">경기도 용인</p>
+                                    </div>
+                                </div>
+
+                                <!-- 6월 -->
+                                <div class="flex md:flex-col items-center text-left md:text-center group flex-1 px-1">
+                                    <div class="w-12 h-12 rounded-full bg-red-600 border-4 border-white flex items-center justify-center z-10 shadow-lg group-hover:scale-110 transition">
+                                        <span class="text-white font-bold text-xs uppercase">JUN</span>
+                                    </div>
+                                    <div class="ml-4 md:ml-0 md:mt-4 whitespace-nowrap">
+                                        <p class="text-sm font-bold text-red-600">2026년 6월</p>
+                                        <p class="text-xs text-red-500 font-bold mt-1">대구</p>
                                     </div>
                                 </div>
                             </div>
@@ -421,6 +433,7 @@
                                     <li>상품 프리셋 관리</li>
                                     <li>영수증 관리</li>
                                     <li>전반적인 결제 프로세스</li>
+                                    <li>SQL및 POS세팅방법</li>
                                 </ul>
                             </div>
                             <div>
